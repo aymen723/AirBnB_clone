@@ -1,19 +1,19 @@
 #!/usr/bin/python3
-"""Defines the BaseModel class."""
+""" BaseModel class."""
 import models
 from uuid import uuid4
 from datetime import datetime
 
 
 class BaseModel:
-    """Represents the BaseModel of the HBnB project."""
+    """the represenation entity of the airbnb project."""
 
     def __init__(self, *args, **kwargs):
-        """Initialize a new BaseModel.
+        """constructor a new base model.
 
         Args:
-            *args (any): Unused.
-            **kwargs (dict): Key/value pairs of attributes.
+            *args (any): nothing.
+            **kwargs (dict): value of attribute.
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid4())
@@ -29,23 +29,21 @@ class BaseModel:
             models.storage.new(self)
 
     def save(self):
-        """Update updated_at with the current datetime."""
+        """update the current datetime."""
         self.updated_at = datetime.today()
         models.storage.save()
 
     def to_dict(self):
-        """Return the dictionary of the BaseModel instance.
-
-        Includes the key/value pair __class__ representing
-        the class name of the object.
+        """Return dict of basemodel instances.
+        including the class and there values.
         """
-        rdict = self.__dict__.copy()
-        rdict["created_at"] = self.created_at.isoformat()
-        rdict["updated_at"] = self.updated_at.isoformat()
-        rdict["__class__"] = self.__class__.__name__
-        return rdict
+        dict = self.__dict__.copy()
+        dict["created_at"] = self.created_at.isoformat()
+        dict["updated_at"] = self.updated_at.isoformat()
+        dict["__class__"] = self.__class__.__name__
+        return dict
 
     def __str__(self):
-        """Return the print/str representation of the BaseModel instance."""
+        """Return the string representation of class model."""
         clname = self.__class__.__name__
         return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
